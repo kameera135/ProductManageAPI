@@ -1,6 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using ProductManageAPI.Interfaces;
+using ProductManageAPI.Models;
+using ProductManageAPI.Repositories;
+using ProductManageAPI.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+
+//database service
+builder.Services.AddDbContextFactory<PmsContext>(opts=>
+opts.UseSqlServer(builder.Configuration.GetConnectionString("PMSDB")));
+
+builder.Services.AddScoped<IAuthRepository, AuthRepositories>();
+builder.Services.AddScoped<IAuthService, AuthServices>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -17,6 +32,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthorization();
 
 app.UseAuthorization();
 
