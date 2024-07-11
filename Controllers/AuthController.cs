@@ -29,7 +29,13 @@ namespace ProductManageAPI.Controllers
 
                 if(userName == null)
                 {
-                    return BadRequest("Wrong username.Kindly check it");
+                    var errorResponse = new
+                    {
+                        Status = "Fail",
+                        Message = "Wrong Username",
+                    };
+
+                    return StatusCode(StatusCodes.Status400BadRequest,errorResponse);
                 }
 
                 var result = m_authService.loginUser(user);
@@ -37,7 +43,13 @@ namespace ProductManageAPI.Controllers
 
                 if (!result)
                 {
-                    return BadRequest("Wrong userName or password. Kindly check");
+                    var errorResponse = new
+                    {
+                        Status = "Fail",
+                        Message = "Wrong Password",
+                    };
+
+                    return StatusCode(StatusCodes.Status400BadRequest, errorResponse);
                 }
 
 
@@ -53,7 +65,13 @@ namespace ProductManageAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                var errorResponse = new
+                {
+                    Message = "Internal Server Error",
+                    ErrorDetails = ex.Message
+                };
+
+                return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
     }

@@ -39,7 +39,7 @@ namespace ProductManageAPI.Repositories
                 claims.Add(new Claim("lName", userDetails.LastName.ToString()));
                 claims.Add(new Claim("email", userDetails.Email.ToString()));
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(s: m_configuration.GetSection("AppSettings:Token").Value));
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(s: m_configuration.GetSection("Jwt:Key").Value));
 
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
