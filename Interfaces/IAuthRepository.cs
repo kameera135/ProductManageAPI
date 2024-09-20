@@ -4,7 +4,7 @@ namespace ProductManageAPI.Interfaces
 {
     public interface IAuthRepository
     {
-        bool loginUser(UserDTO user);
-        string createToken(UserDTO user);
+        Task<bool> loginUser(UserDTO user);
+        Task<string> createToken(UserDTO user);
     }
 }

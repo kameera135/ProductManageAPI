@@ -12,11 +12,11 @@ namespace ProductManageAPI.Services
             m_authRepository = authRepository;
         }
 
-        public string createToken(UserDTO user)
+        public async Task<string> createToken(UserDTO user)
         {
             try
             {
-                var tempToken = m_authRepository.createToken(user);
+                var tempToken = await m_authRepository.createToken(user);
                 return tempToken.ToString();
 
             }
@@ -26,11 +26,11 @@ namespace ProductManageAPI.Services
             }
         }
 
-        bool IAuthService.loginUser(UserDTO user)
+        public async Task<bool> loginUser(UserDTO user)
         {
             try
             {
-                var tempUser = m_authRepository.loginUser(user);
+                var tempUser = await m_authRepository.loginUser(user);
                 return tempUser;
             }
             catch (Exception ex)

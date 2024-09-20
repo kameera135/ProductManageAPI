@@ -47,6 +47,7 @@ opts.UseSqlServer(builder.Configuration.GetConnectionString("PMSDB")));
 
 builder.Services.AddScoped<IAuthRepository, AuthRepositories>();
 builder.Services.AddScoped<IAuthService, AuthServices>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

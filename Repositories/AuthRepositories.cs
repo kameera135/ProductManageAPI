@@ -20,7 +20,7 @@ namespace ProductManageAPI.Repositories
             m_configuration = configuration;
         }
 
-        public string createToken(UserDTO user)
+        public async Task<string> createToken(UserDTO user)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace ProductManageAPI.Repositories
             }
         }
 
-        public bool loginUser(UserDTO user)
+        public async Task<bool> loginUser(UserDTO user)
         {
             try
             {

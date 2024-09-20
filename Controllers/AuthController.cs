@@ -21,7 +21,7 @@ namespace ProductManageAPI.Controllers
         }
 
         [HttpPost("user/login")]
-        public IActionResult LoginUser(UserDTO user)
+        public async Task<IActionResult> LoginUser(UserDTO user)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace ProductManageAPI.Controllers
                     return StatusCode(StatusCodes.Status400BadRequest,errorResponse);
                 }
 
-                var result = m_authService.loginUser(user);
+                var result = await m_authService.loginUser(user);
                 var handler = new JwtSecurityTokenHandler();
 
                 if (!result)
@@ -53,7 +53,7 @@ namespace ProductManageAPI.Controllers
                 }
 
 
-                string token = m_authService.createToken(user);
+                string token = await m_authService.createToken(user);
 
                 return Ok(new
                 {
