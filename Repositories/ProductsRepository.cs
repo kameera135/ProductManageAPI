@@ -54,7 +54,7 @@ namespace ProductManageAPI.Repositories
             }
         }
 
-        public async Task<int> postProducts(PostProductDTO products, int createdBy)
+        public async Task<int> postProducts(PostProductDTO products, long createdBy)
         {
             try
             {
@@ -65,11 +65,41 @@ namespace ProductManageAPI.Repositories
                     ProductName = products.ProductName,
                     Price = products.Price,
                     IsActive = products.IsActive,
+                    CreatedAt = DateTime.Now,
                     CreatedBy = createdBy
                 };
 
                _dbContext.Add(tempProduct);
                return await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<int> updateProduct(PutProductDTO product, long updatedBy)
+        {
+            try
+            {
+                using var _dbContext = m_dbContext.CreateDbContext();
+
+                //Product? existingResult = m_pmsContext.Products.Where(p=>p.ProductId == product.ProductId).FirstOrDefault();
+                Product? existingResult = _dbContext.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
+
+
+                if (existingResult == null)
+                {
+                    throw new Exception("product not found");
+                }
+
+                existingResult.ProductName = product.ProductName;
+                existingResult.Price = product.Price;
+                existingResult.IsActive = product.IsActive;
+                existingResult.UpdatedAt = DateTime.Now;
+                existingResult.UpdatedBy = updatedBy;
+
+                return await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
