@@ -82,21 +82,46 @@ namespace ProductManageAPI.Controllers
             }
         }
 
-        /*[HttpPost("products")]
-        public async Task<IActionResult> PostProducts(ProductsDTO products)
+        [HttpPost("products")]
+        public async Task<IActionResult> PostProducts(PostProductDTO products, int createdBy)
         {
             try
             {
+                int result = await m_productsRepository.postProducts(products,createdBy);
+
+                if (result == 0)
+                {
+                    var errorResponse = new
+                    {
+                        Message = "Internal Server Error",
+                        ErrorDetails = "Databese is not updated"
+                    };
+
+                    return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
+                }
+
+                return Ok(new
+                {
+                    status_code = 200,
+                    status = "Success",
+                    message = "Product is created successfully"
+                });
 
             }
             catch (Exception ex)
             {
+                var errorResponse = new
+                {
+                    Message = "Internal Server Error",
+                    ErrorDetails = ex.Message
+                };
 
+                return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
             finally
             {
 
             }
-        }*/
+        }
     }
 }

@@ -6,6 +6,6 @@ namespace ProductManageAPI.Interfaces
     {
         Task<List<ProductsDTO>> searchProducts(string searchedProduct);
 
-        //Task postProducts(PostProductDTO products, int createdBy);
+        Task<int> postProducts(PostProductDTO products, int createdBy);
     }
 }
